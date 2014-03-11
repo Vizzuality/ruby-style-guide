@@ -81,16 +81,10 @@
   than one expression in a single-line method.
 
   ```Ruby
-  # bad
+  # all bad
   def too_much; something; something_else; end
-
-  # okish - notice that the first ; is required
   def no_braces_method; body end
-
-  # okish - notice that the second ; is optional
   def no_braces_method; body; end
-
-  # okish - valid syntax, but no ; makes it kind of hard to read
   def some_method() body end
 
   # good
