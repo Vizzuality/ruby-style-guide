@@ -1988,6 +1988,26 @@
 
 ## Exceptions
 
+* Never use `rescue => error`. Rationale: it does not work as you might expect:
+
+  ```Ruby
+  class CustomException < Exception; end
+
+  begin
+    raise CustomException
+  # bad
+  rescue => exception
+    puts "this is never executed!"
+  end
+
+  begin
+    raise CustomException
+  # good
+  rescue Exception => exception
+    puts "yeah, I can do exception handling of Exceptions and StandardErrors"
+  end
+  ```
+
 * Signal exceptions using the `fail` method. Use `raise` only when
   catching an exception and re-raising it (because here you're not
   failing, but explicitly and purposefully raising an exception).
@@ -1995,7 +2015,7 @@
   ```Ruby
   begin
     fail 'Oops'
-  rescue => error
+  rescue Exception => error
     raise if error.message != 'Oops'
   end
   ```
@@ -2151,7 +2171,7 @@
   begin
     # a blind rescue rescues from StandardError, not Exception as many
     # programmers assume.
-  rescue => e
+  rescue Exception => e
     # exception handling
   end
 
